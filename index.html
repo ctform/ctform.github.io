@@ -243,6 +243,282 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ctform.github.io/2019/09/24/leetcode给定一个字符串，求最长子串的长度/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wanjiawei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/timg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ctform">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/24/leetcode给定一个字符串，求最长子串的长度/" itemprop="url">leetcode给定一个字符串，求最长子串的长度</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-24T22:18:45+08:00">
+                2019-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="给定一个字符串，请你找出其中不含有重复字符的-最长子串-的长度。"><a href="#给定一个字符串，请你找出其中不含有重复字符的-最长子串-的长度。" class="headerlink" title="给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。"></a>给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。</h2><h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1:"></a>示例 1:</h3><pre><code class="bash">输入: <span class="string">"abcabcbb"</span>
+输出: 3 
+解释: 因为无重复字符的最长子串是 <span class="string">"abc"</span>，所以其长度为 3。</code></pre>
+<p>字符串拆分，找不重复字符最大字串长度，听起来很简单，实际写过程需要对java集合类要很熟悉，Set集合，无序不可重复，利用其来存储String使用charAt方法得到的char值。<br>解决思想是滑动窗口[i,j]，顺序比较一个个元素是否存在于集合中，不存在则加入[i,j+1]，更新并记录下连续不存在的最大持续次数，元素重复则将滑动窗口的左侧提至重复元素索引处并保存[index+1,j]。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int lengthOfLongestSubstring(String s) &#123;</span><br><span class="line">        Set set = new HashSet();</span><br><span class="line">        int i = 0;	//记录窗口左侧索引</span><br><span class="line">        int j = 0;	//记录窗口右侧索引</span><br><span class="line">        int n = s.length();</span><br><span class="line">        int anx = 0;</span><br><span class="line">        while(i &lt; n - anx &amp;&amp; j &lt; n)&#123;</span><br><span class="line">        	//这里判断范围进行了优化，做窗口到达n-anx时，剩余所有元素就算不重复最大窗口数也就是anx的取值，所以 //后面部分不需要再进行计算</span><br><span class="line"></span><br><span class="line">        	//判断元素是否在set中包含</span><br><span class="line">            if(!set.contains(s.charAt(j)))&#123;</span><br><span class="line">            	//不包含则添加，窗口右侧右移一位</span><br><span class="line">                set.add(s.charAt(j++));</span><br><span class="line">                //记录此时的最大窗口，比历史最大还大则更新</span><br><span class="line">                anx = Math.max(anx,j-i);</span><br><span class="line">            &#125;else</span><br><span class="line">            	//如果包含set集合中，则顺序remove集合中存储的元素，直至重复元素被剔除（滑动窗口左侧提至重复元 //素被排除）</span><br><span class="line">                set.remove(s.charAt(i++));</span><br><span class="line">        &#125;</span><br><span class="line">        return anx;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>继续进行优化，上面代码中对于窗口的移动是一次一位的，而且每次移动都还需要进行一次判断，能否在窗口中找到重复元素的同时获取其索引位置，一次性将窗口移动至重复元素右侧，将大大优化代码性能，当然这里Set集合就不能满足需求了，改用map集合，存储{char：index}对方式来实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int lengthOfLongestSubstring(String s) &#123;</span><br><span class="line">        Map&lt;Character,Integer&gt; map = new HashMap();</span><br><span class="line">        int i = 0;	//记录窗口左侧索引</span><br><span class="line">        int j = 0;	//记录窗口右侧索引</span><br><span class="line">        int n = s.length();</span><br><span class="line">        int anx = 0;</span><br><span class="line">        while(i &lt; n - anx &amp;&amp; j &lt; n)&#123;</span><br><span class="line">            if(map.contains(s.charAt(j)))&#123;</span><br><span class="line">            	//获取到此次冲突的坐标，max比较是为了使i记录的是使滑动窗口左侧最右的的索引</span><br><span class="line">            	//例如 [a,b,c,d,d,a]</span><br><span class="line">            	//第一次i记录的是d的重复，为4，即左窗口位置</span><br><span class="line">            	//第二次是a元素重复，若要记录的话就是i为1，但是中间元素d已经重复了，所以记录不刷新，任保持最右</span><br><span class="line">                i = Math.max(map.get(s.charAt(j)),i);</span><br><span class="line">            &#125;</span><br><span class="line">            	anx = Math.max(anx,j-i+1);</span><br><span class="line">                map.put(s.charAt(j),j+1);</span><br><span class="line">                //关于这里为什么要+1作为索引而不用j,上面改用j-i+1而不是j-i的原因就是，防范单字符字符串</span><br><span class="line">                //如&quot;a&quot;，map.put(s.charAt(0),0); anx = Math.max(0,0-0) 最终结果为0，错误</span><br><span class="line"></span><br><span class="line">                j++;</span><br><span class="line">        &#125;</span><br><span class="line">        return anx;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ctform.github.io/2019/09/24/leetcode题目记录1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wanjiawei">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/timg.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ctform">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/24/leetcode题目记录1/" itemprop="url">leetcode题目记录用链表存数值，两数相加求一个新链表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-24T21:37:11+08:00">
+                2019-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="给出两个非空的链表用来表示两个非负的整数。其中，它们各自的位数是按照-逆序-的方式存储的，并且它们的每个节点只能存储一位数字。如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。您可以假设除了数字0之外，这两个数都不会以0开头。"><a href="#给出两个非空的链表用来表示两个非负的整数。其中，它们各自的位数是按照-逆序-的方式存储的，并且它们的每个节点只能存储一位数字。如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。您可以假设除了数字0之外，这两个数都不会以0开头。" class="headerlink" title="给出两个非空的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储一位数字。如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。您可以假设除了数字0之外，这两个数都不会以0开头。"></a>给出两个非空的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储一位数字。如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。您可以假设除了数字0之外，这两个数都不会以0开头。</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)</span><br><span class="line">输出：7 -&gt; 0 -&gt; 8</span><br><span class="line">原因：342 + 465 = 807</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Definition <span class="keyword">for</span> singly-linked list.</span><br><span class="line"> * public class ListNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     ListNode next;</span><br><span class="line"> *     ListNode(int x) &#123; val = x; &#125;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+
+<p>通过观察实现的节点结构可知，对于节点val值的赋予只能在创建节点时赋予，所以先对两链表的节点进行值计算，之后将得到的值用来创建结果链表的新节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">测试用例	说明</span><br><span class="line">l1=[0,1]l1=[0,1]，l2=[0,1,2]l2=[0,1,2]	当一个列表比另一个列表长时</span><br><span class="line">l1=[]l1=[]，l2=[0,1]l2=[0,1]	当一个列表为空时，即出现空列表</span><br><span class="line">l1=[9,9]l1=[9,9]，l2=[1]l2=[1]	求和运算最后可能出现额外的进位，这一点很容易被遗忘</span><br></pre></td></tr></table></figure>
+
+<p>值得注意的输入可能，情况一：一表比另一表长，则对于更长的表，后续多出的节点需要继续的加入<br>                  情况二：一个链表可能为空，在处理前就需要对链表进行判断，是否为空<br>                  情况三：最后的进位，求和的最高位同样会可能出现进位，最后要考虑是否因为存在进位而需要多增加一个节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public ListNode addTwoNumbers(ListNode l1, ListNode l2) &#123;</span><br><span class="line"></span><br><span class="line">    	//创建一个节点作为保存结果链表的表头</span><br><span class="line">        ListNode head = new ListNode(0);</span><br><span class="line">        </span><br><span class="line">        ListNode p = l1 , q = l2;</span><br><span class="line"></span><br><span class="line">        //进位carry，不为0时表示存在进位</span><br><span class="line">        int carry = 0;</span><br><span class="line"></span><br><span class="line">        //用以表示当前处理的节点，起始位头节点</span><br><span class="line">        ListNode curr = head;</span><br><span class="line"></span><br><span class="line">        //若至少有一个节点不为空则继续，排除情况一、二</span><br><span class="line">        while(p != null || q != null)&#123;</span><br><span class="line"></span><br><span class="line">        	//对于情况一、二的排除，防止空指针异常</span><br><span class="line">            int a = (p != null) ? p.val:0;</span><br><span class="line">            int b = (q != null) ? q.val:0;</span><br><span class="line">            </span><br><span class="line">            //这一级的和，为进位加上两个节点数值和</span><br><span class="line">            int sum = carry + a + b;</span><br><span class="line">            //得到该级的进位</span><br><span class="line">            carry = sum / 10;</span><br><span class="line">           </span><br><span class="line">           	//新建节点，并赋值，sun%10余下即为该级的值</span><br><span class="line">            curr.next = new ListNode(sum%10);</span><br><span class="line">            //curr指向下一节点，继续处理</span><br><span class="line">            curr = curr.next;</span><br><span class="line">            </span><br><span class="line">            //p = (p.next != null) ? p.next:null;</span><br><span class="line">            //q = (q.next != null) ? q.next:null;</span><br><span class="line">            //这里就不能这样写，因为并不知道两者是否都为非空，非空自然能取到next节点，但空使用 .next报空指针异常</span><br><span class="line">            if(p != null) p = p.next;</span><br><span class="line">            if(q != null) q = q.next;</span><br><span class="line">            //若节点为null，则不进行处理，交由上面判空语句进行排除</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        //对于情况三的排除，最高位进一</span><br><span class="line">        if(carry != 0)&#123;</span><br><span class="line">            curr.next = new ListNode(carry);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        //由于使用了head节点作为头节点其中不包含结果，所以返回的链表应该排除这个节点</span><br><span class="line">        //return head;</span><br><span class="line">        return head.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://ctform.github.io/2019/09/18/nginx部署过程中的一些问题解决/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -539,12 +815,21 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
             
 
             
