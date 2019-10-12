@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://ctform.github.io/uploads/grow.png">
 <meta property="og:image" content="http://ctform.github.io/uploads/newCapacity.png">
 <meta property="og:image" content="http://ctform.github.io/uploads/hugeCapacity.png">
-<meta property="og:updated_time" content="2019-10-12T09:22:57.185Z">
+<meta property="og:updated_time" content="2019-10-12T09:27:09.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArrayList扩容原理">
 <meta name="twitter:description" content="ArrayList扩容实现步骤 总的来说就是分两步：  1、扩容    把原来的数组复制到另一个内存空间更大的数组中  2、添加元素    把新元素添加到扩容以后的数组中ArrayList底层定义的变量 arrayList的有参及无参构造方法123456789101112131415	public ArrayList() &amp;#123;	    this.elementData = DEFAULTC">
@@ -346,12 +346,11 @@
 <h2 id="newCapacity"><a href="#newCapacity" class="headerlink" title="newCapacity()"></a>newCapacity()</h2><p><img src="/uploads/newCapacity.png" alt="avatar"><br>    oldCapacity=elementData.length(),newCapacity=oldCapacity+(oldCapacity &gt;&gt; 1) 为原本容量的1.5倍<br>    这里判断newCapcity-oldCapacity &lt;= 0    主要有两种情况可能会导致：一、无参构造的默认空容量elementData容量为0，导致计算结果为0<br>                            二、size+1设定的minCapacity overflow<br>    解决方法    对于一：取max(默认容量,最小容量)    默认容量为10，即ArrayList数组空参初始容量设定是10<br>            对于二：抛出内容溢出错误<br>            其他情况还是返回minCapacity<br>    这里判断newCapacity-MAX_ARRAY_SIZE &lt;= 0    检测新容量是否会超出限制</p>
 <h2 id="hugeCapacity"><a href="#hugeCapacity" class="headerlink" title="hugeCapacity()"></a>hugeCapacity()</h2><p><img src="/uploads/hugeCapacity.png" alt="avatar"><br>    对于超出限制的新容量处理方法hugeCapacity()<br>    minCapacity若小于0 即size已经是Integer.MAX_VALUE，size+1导致溢出为负。抛出内容溢出错误<br>    否则说明oldCapacity的1.5倍已经大于容量限制，此时不能返回newCapacity了，而应该直接将容量限制返回<br>    但这里还做了一个minCapacity(实际要占用空间)的大小判断</p>
 {% codeblock %}
-/**
      * The maximum size of array to allocate (unless necessary).
      * Some VMs reserve some header words in an array.
      * Attempts to allocate larger arrays may result in
      * OutOfMemoryError: Requested array size exceeds VM limit
-     */
+    
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
 {% endcodeblock %}
