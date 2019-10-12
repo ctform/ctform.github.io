@@ -79,23 +79,23 @@
 
 
 
-<meta name="description" content="ArrayList扩容实现步骤 总的来说就是分两步：  1、扩容    把原来的数组复制到另一个内存空间更大的数组中  2、添加元素    把新元素添加到扩容以后的数组中ArrayList底层定义的变量 arrayList的有参及无参构造方法1234567891011121314	public ArrayList() &amp;#123;	    this.elementData = DEFAULTCAP">
+<meta name="description" content="ArrayList扩容实现步骤 总的来说就是分两步：  1、扩容    把原来的数组复制到另一个内存空间更大的数组中  2、添加元素    把新元素添加到扩容以后的数组中ArrayList底层定义的变量 arrayList的有参及无参构造方法123456789101112131415	public ArrayList() &amp;#123;	    this.elementData = DEFAULTC">
 <meta name="keywords" content="Ctform,java,blogs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ArrayList扩容原理">
 <meta property="og:url" content="http://ctform.github.io/2019/10/12/ArrayList扩容原理/index.html">
 <meta property="og:site_name" content="Ctform">
-<meta property="og:description" content="ArrayList扩容实现步骤 总的来说就是分两步：  1、扩容    把原来的数组复制到另一个内存空间更大的数组中  2、添加元素    把新元素添加到扩容以后的数组中ArrayList底层定义的变量 arrayList的有参及无参构造方法1234567891011121314	public ArrayList() &amp;#123;	    this.elementData = DEFAULTCAP">
+<meta property="og:description" content="ArrayList扩容实现步骤 总的来说就是分两步：  1、扩容    把原来的数组复制到另一个内存空间更大的数组中  2、添加元素    把新元素添加到扩容以后的数组中ArrayList底层定义的变量 arrayList的有参及无参构造方法123456789101112131415	public ArrayList() &amp;#123;	    this.elementData = DEFAULTC">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ctform.github.io/uploads/QQ%E6%88%AA%E5%9B%BE20190919231122.png">
+<meta property="og:image" content="http://ctform.github.io/uploads/1470032-20181024160423543-1818807776.png">
 <meta property="og:image" content="http://ctform.github.io/uploads/grow.png">
 <meta property="og:image" content="http://ctform.github.io/uploads/newCapacity.png">
 <meta property="og:image" content="http://ctform.github.io/uploads/hugeCapacity.png">
-<meta property="og:updated_time" content="2019-10-12T09:07:13.918Z">
+<meta property="og:updated_time" content="2019-10-12T09:16:48.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArrayList扩容原理">
-<meta name="twitter:description" content="ArrayList扩容实现步骤 总的来说就是分两步：  1、扩容    把原来的数组复制到另一个内存空间更大的数组中  2、添加元素    把新元素添加到扩容以后的数组中ArrayList底层定义的变量 arrayList的有参及无参构造方法1234567891011121314	public ArrayList() &amp;#123;	    this.elementData = DEFAULTCAP">
-<meta name="twitter:image" content="http://ctform.github.io/uploads/QQ%E6%88%AA%E5%9B%BE20190919231122.png">
+<meta name="twitter:description" content="ArrayList扩容实现步骤 总的来说就是分两步：  1、扩容    把原来的数组复制到另一个内存空间更大的数组中  2、添加元素    把新元素添加到扩容以后的数组中ArrayList底层定义的变量 arrayList的有参及无参构造方法123456789101112131415	public ArrayList() &amp;#123;	    this.elementData = DEFAULTC">
+<meta name="twitter:image" content="http://ctform.github.io/uploads/1470032-20181024160423543-1818807776.png">
 
 
 
@@ -288,6 +288,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java底层实现/" itemprop="url" rel="index">
+                    <span itemprop="name">Java底层实现</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -318,11 +340,11 @@
         <h2 id="ArrayList扩容实现步骤"><a href="#ArrayList扩容实现步骤" class="headerlink" title="ArrayList扩容实现步骤"></a>ArrayList扩容实现步骤</h2><pre><code> 总的来说就是分两步：
  1、扩容    把原来的数组复制到另一个内存空间更大的数组中
 
-2、添加元素    把新元素添加到扩容以后的数组中</code></pre><h2 id="ArrayList底层定义的变量"><a href="#ArrayList底层定义的变量" class="headerlink" title="ArrayList底层定义的变量"></a>ArrayList底层定义的变量</h2><p><img src="/uploads/QQ%E6%88%AA%E5%9B%BE20190919231122.png" alt="avatar"></p>
-<h2 id="arrayList的有参及无参构造方法"><a href="#arrayList的有参及无参构造方法" class="headerlink" title="arrayList的有参及无参构造方法"></a>arrayList的有参及无参构造方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">	public ArrayList() &#123;</span><br><span class="line">	    this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ArrayList(int initialCapacity) &#123;</span><br><span class="line">    if (initialCapacity &gt; 0) &#123;</span><br><span class="line">        this.elementData = new Object[initialCapacity];</span><br><span class="line">    &#125; else if (initialCapacity == 0) &#123;</span><br><span class="line">        this.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        throw new IllegalArgumentException(&quot;Illegal Capacity: &quot;+</span><br><span class="line">                                           initialCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<pre><code>无参使用默认容量空元素数据赋予给elementData，有参根据传入数值new新的Obj数组</code></pre><h2 id="扩容方法grow"><a href="#扩容方法grow" class="headerlink" title="扩容方法grow()"></a>扩容方法grow()</h2><p><img src="/uploads/grow.png" alt="avatar"><br>    这里我们不探究ArrayList合适会进行扩容（add方法执行的时候，容量不够，就会触发)，着重关注扩容的内容</p>
-<pre><code>将size加1作为minCapacity的值（因为触发了扩容，那么最少也得加一位新的空间,这也是实际要占用的空间大小），进行数组的赋值，空间大小位newCapacity（minCapacity）</code></pre><p><img src="/uploads/newCapacity.png" alt="avatar"><br>    oldCapacity=elementData.length(),newCapacity=oldCapacity+(oldCapacity &gt;&gt; 1) 为原本容量的1.5倍<br>    这里判断newCapcity-oldCapacity &lt;= 0    主要有两种情况可能会导致：一、无参构造的默认空容量elementData容量为0，导致计算结果为0<br>                            二、size+1设定的minCapacity overflow<br>    解决方法    对于一：取max(默认容量,最小容量)    默认容量为10，即ArrayList数组空参初始容量设定是10<br>            对于二：抛出内容溢出错误<br>            其他情况还是返回minCapacity</p>
-<pre><code>这里判断newCapacity-MAX_ARRAY_SIZE &lt;= 0    检测新容量是否会超出限制</code></pre><p><img src="/uploads/hugeCapacity.png" alt="avatar"><br>    对于超出限制的新容量处理方法hugeCapacity()<br>    minCapacity若小于0 即size已经是Integer.MAX_VALUE，size+1导致溢出为负。抛出内容溢出错误<br>    否则说明oldCapacity的1.5倍已经大于容量限制，此时不能返回newCapacity了，而应该直接将容量限制返回<br>    但这里还做了一个minCapacity(实际要占用空间)的大小判断</p>
+2、添加元素    把新元素添加到扩容以后的数组中</code></pre><h2 id="ArrayList底层定义的变量"><a href="#ArrayList底层定义的变量" class="headerlink" title="ArrayList底层定义的变量"></a>ArrayList底层定义的变量</h2><p><img src="/uploads/1470032-20181024160423543-1818807776.png" alt="avatar"></p>
+<h2 id="arrayList的有参及无参构造方法"><a href="#arrayList的有参及无参构造方法" class="headerlink" title="arrayList的有参及无参构造方法"></a>arrayList的有参及无参构造方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">	public ArrayList() &#123;</span><br><span class="line">	    this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ArrayList(int initialCapacity) &#123;</span><br><span class="line">    if (initialCapacity &gt; 0) &#123;</span><br><span class="line">        this.elementData = new Object[initialCapacity];</span><br><span class="line">    &#125; else if (initialCapacity == 0) &#123;</span><br><span class="line">        this.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        throw new IllegalArgumentException(&quot;Illegal Capacity: &quot;+</span><br><span class="line">                                           initialCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>无参使用默认容量空元素数据赋予给elementData，有参根据传入数值new新的Obj数组</code></pre><h2 id="扩容方法grow"><a href="#扩容方法grow" class="headerlink" title="扩容方法grow()"></a>扩容方法grow()</h2><p><img src="/uploads/grow.png" alt="avatar"><br>    这里我们不探究ArrayList合适会进行扩容（add方法执行的时候，容量不够，就会触发)，着重关注扩容的内容<br>    将size+1作为minCapacity的值（因为触发了扩容，那么最少也得加一位新的空间,这也是实际要占用的空间大小），进行数组的赋值，空间大小位newCapacity（minCapacity）</p>
+<h2 id="newCapacity"><a href="#newCapacity" class="headerlink" title="newCapacity()"></a>newCapacity()</h2><p><img src="/uploads/newCapacity.png" alt="avatar"><br>    oldCapacity=elementData.length(),newCapacity=oldCapacity+(oldCapacity &gt;&gt; 1) 为原本容量的1.5倍<br>    这里判断newCapcity-oldCapacity &lt;= 0    主要有两种情况可能会导致：一、无参构造的默认空容量elementData容量为0，导致计算结果为0<br>                            二、size+1设定的minCapacity overflow<br>    解决方法    对于一：取max(默认容量,最小容量)    默认容量为10，即ArrayList数组空参初始容量设定是10<br>            对于二：抛出内容溢出错误<br>            其他情况还是返回minCapacity<br>    这里判断newCapacity-MAX_ARRAY_SIZE &lt;= 0    检测新容量是否会超出限制</p>
+<h2 id="hugeCapacity"><a href="#hugeCapacity" class="headerlink" title="hugeCapacity()"></a>hugeCapacity()</h2><p><img src="/uploads/hugeCapacity.png" alt="avatar"><br>    对于超出限制的新容量处理方法hugeCapacity()<br>    minCapacity若小于0 即size已经是Integer.MAX_VALUE，size+1导致溢出为负。抛出内容溢出错误<br>    否则说明oldCapacity的1.5倍已经大于容量限制，此时不能返回newCapacity了，而应该直接将容量限制返回<br>    但这里还做了一个minCapacity(实际要占用空间)的大小判断</p>
 {% codeblock %}
 /**
      * The maximum size of array to allocate (unless necessary).
@@ -455,7 +477,7 @@
               
               <div class="site-state-item site-state-categories">
                 
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 
               </div>
@@ -490,7 +512,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ArrayList扩容实现步骤"><span class="nav-number">1.</span> <span class="nav-text">ArrayList扩容实现步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ArrayList底层定义的变量"><span class="nav-number">2.</span> <span class="nav-text">ArrayList底层定义的变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arrayList的有参及无参构造方法"><span class="nav-number">3.</span> <span class="nav-text">arrayList的有参及无参构造方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩容方法grow"><span class="nav-number">4.</span> <span class="nav-text">扩容方法grow()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ArrayList扩容实现步骤"><span class="nav-number">1.</span> <span class="nav-text">ArrayList扩容实现步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ArrayList底层定义的变量"><span class="nav-number">2.</span> <span class="nav-text">ArrayList底层定义的变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arrayList的有参及无参构造方法"><span class="nav-number">3.</span> <span class="nav-text">arrayList的有参及无参构造方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩容方法grow"><span class="nav-number">4.</span> <span class="nav-text">扩容方法grow()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#newCapacity"><span class="nav-number">5.</span> <span class="nav-text">newCapacity()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hugeCapacity"><span class="nav-number">6.</span> <span class="nav-text">hugeCapacity()</span></a></li></ol></div>
             
 
           </div>
